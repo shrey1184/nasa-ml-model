@@ -1,4 +1,4 @@
-# NASA Climate Trends Prediction - Data Collection Pipeline
+# NASA Climate Trends Prediction - ML Project
 
 Complete pipeline for collecting and processing NASA POWER climate data for ML model training.
 
@@ -8,32 +8,62 @@ Complete pipeline for collecting and processing NASA POWER climate data for ML m
 # Activate virtual environment
 source venv/bin/activate
 
-# Run pipeline for major cities (2010-2024)
+# Make predictions with trained model
+python local_inference.py
+
+# Fetch new climate data
 python main_pipeline.py --grid cities --start 2010 --end 2024
 
-# Test run with only 3 locations
-python main_pipeline.py --grid cities --start 2020 --end 2021 --test
+# Clean and process data
+python cleaning_pipeline.py
+
+# Run tests
+python test_project.py
 ```
+
+## 🤖 Model Performance
+
+**LSTM Model** for climate anomaly prediction:
+- **Temperature Anomaly**: R² = 0.35, RMSE = 0.107
+- **Precipitation Anomaly**: R² = 0.79, RMSE = 0.237
+- **Architecture**: LSTM with 18 input features, 2 outputs
+- **Training**: 1,260 samples, 100 epochs
 
 ## 📁 Project Structure
 
 ```
 ml nasa/
-├── main_pipeline.py          # Main orchestration script
-├── nasa_apis.py              # NASA API configuration
-├── test_apis.py              # API testing utilities
-├── requirements.txt          # Python dependencies
-├── data/                     # Data storage
-│   ├── locations_*.csv       # Location grids
-│   ├── climate_data_*.csv    # Raw climate data
-│   ├── climate_master_*.csv  # Processed datasets
-│   └── raw/                  # Raw JSON responses
-├── src/                      # Source code
-│   ├── location_grid.py      # Location grid generator
-│   ├── data_fetcher.py       # NASA API data fetcher
-│   └── data_processor.py     # Data processing & merging
-├── models/                   # For trained ML models
-└── app/                      # For deployment code
+├── main_pipeline.py          # Data collection pipeline
+├── cleaning_pipeline.py      # Data cleaning workflow
+├── local_inference.py        # Run model predictions
+├── test_project.py          # Comprehensive test suite
+├── nasa_apis.py             # NASA API configuration
+├── requirements.txt         # Python dependencies
+├── setup.sh                 # Setup automation script
+│
+├── data/                    # Data storage
+│   ├── climate_model_ready_transformed.csv  # ML-ready data (1,800 samples)
+│   ├── model_configuration.json             # Model config
+│   ├── locations_major_cities.csv           # Location data
+│   └── raw/                                 # Raw API responses
+│
+├── models/                  # Trained models
+│   ├── climate_lstm_model.keras             # LSTM model (3.79 MB)
+│   ├── lstm_scaler.pkl                      # Feature scaler
+│   ├── lstm_model_metadata.json             # Performance metrics
+│   └── lstm_training_history.pkl            # Training logs
+│
+├── src/                     # Source modules
+│   ├── location_grid.py     # Location grid generator
+│   ├── data_fetcher.py      # NASA API data fetcher
+│   ├── data_processor.py    # Data processing
+│   └── data_cleaner.py      # Data cleaning
+│
+├── results/                 # Model outputs
+│   ├── climate_predictions_lstm_local.csv
+│   └── local_predictions_visualization.png
+│
+└── venv/                    # Virtual environment
 ```
 
 ## 🌍 Location Grids
@@ -79,25 +109,34 @@ For each location, fetches NASA POWER data:
 
 ## 🔧 Usage Examples
 
-### Test Run (3 locations, 2 years)
+### Make Predictions
+```bash
+python local_inference.py
+# Generates predictions for all 1,800 samples
+# Outputs: results/climate_predictions_lstm_local.csv
+#          results/local_predictions_visualization.png
+```
+
+### Test Everything
+```bash
+python test_project.py
+# Runs 8 comprehensive tests
+# Verifies all components work correctly
+```
+
+### Fetch New Data - Test Run (3 locations, 2 years)
 ```bash
 python main_pipeline.py --grid cities --start 2020 --end 2021 --test
 ```
 
-### Major Cities (Full Period)
+### Fetch New Data - Major Cities (Full Period)
 ```bash
-python main_pipeline.py --grid cities --start 2005 --end 2024
+python main_pipeline.py --grid cities --start 2010 --end 2024
 ```
 
 ### India Regional Grid (Limited Locations)
 ```bash
 python main_pipeline.py --grid india --start 2010 --end 2024 --max-locations 50
-```
-
-### Global Grid (Full Coverage)
-```bash
-# Warning: This will fetch ~650 locations and take several hours
-python main_pipeline.py --grid global --start 2005 --end 2024
 ```
 
 ## 📈 Output Datasets
@@ -169,25 +208,20 @@ After generating the master dataset:
 
 ## 📦 Dependencies
 
-- pandas
-- numpy
-- requests
-- tqdm
-- scikit-learn (for future ML modeling)
-- fastapi, uvicorn (for future deployment)
+All dependencies are installed in `venv/`:
+- pandas, numpy - Data processing
+- tensorflow, keras - ML model
+- scikit-learn - ML utilities  
+- matplotlib, seaborn - Visualization
+- joblib - Model persistence
+- requests - API calls
 
-## 🐛 Troubleshooting
+## 🔄 Workflow
 
-**Problem: API request failures**
-- Check internet connection
-- Verify NASA POWER API is accessible
-- Reduce request rate (increase delay in data_fetcher.py)
+1. **Data Collection** → `main_pipeline.py`
+2. **Data Cleaning** → `cleaning_pipeline.py`
+3. **Model Training** → (done in Google Colab)
+4. **Predictions** → `local_inference.py`
+5. **Testing** → `test_project.py`
 
-**Problem: Out of disk space**
-- Run with --test flag first
-- Use --max-locations to limit data fetching
-- Clean up data/raw/ folder periodically
-
-**Problem: Parsing errors**
-- Check NASA API response format hasn't changed
-- Verify date format in raw JSON files
+````

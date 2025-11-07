@@ -1,0 +1,45 @@
+{
+  "model_type": "LSTM",
+  "input_shape": [
+    1,
+    18
+  ],
+  "output_shape": 2,
+  "n_features": 18,
+  "n_targets": 2,
+  "target_names": [
+    "T2M_anom",
+    "PRECTOTCORR_anom"
+  ],
+  "feature_names": [
+    "T2M_transformed",
+    "T2M_MAX_transformed",
+    "T2M_MIN_transformed",
+    "PRECTOTCORR_transformed",
+    "RH2M_transformed",
+    "ALLSKY_SFC_SW_DWN_transformed",
+    "month_sin",
+    "month_cos",
+    "year_norm",
+    "latitude",
+    "longitude",
+    "T2M_range",
+    "heat_index",
+    "precip_log",
+    "season_Fall",
+    "season_Spring",
+    "season_Summer",
+    "season_Winter"
+  ],
+  "train_samples": 1260,
+  "val_samples": 270,
+  "test_samples": 270,
+  "test_loss": 0.04650937393307686,
+  "test_mae": 0.11496440321207047,
+  "test_rmse": 0.2156603207200547,
+  "r2_temperature": 0.31758484943099974,
+  "r2_precipitation": 0.7387548210529236,
+  "epochs_trained": 100,
+  "best_epoch": 89,
+  "best_val_loss": 0.045862723141908646
+}
