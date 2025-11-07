@@ -1,0 +1,114 @@
+{
+  "deployment_info": {
+    "export_date": "2025-11-07T18:56:24.658647",
+    "version": "1.0.0",
+    "model_type": "LSTM",
+    "framework": "TensorFlow/Keras",
+    "python_version": "3.13.7"
+  },
+  "model_details": {
+    "architecture": "LSTM",
+    "input_features": 18,
+    "output_targets": 2,
+    "input_shape": [
+      1,
+      18
+    ],
+    "output_shape": 2,
+    "training_samples": 1260,
+    "validation_samples": 270,
+    "test_samples": 270
+  },
+  "performance": {
+    "test_loss": 0.04650937393307686,
+    "test_mae": 0.11496440321207047,
+    "test_rmse": 0.2156603207200547,
+    "r2_temperature": 0.31758484943099974,
+    "r2_precipitation": 0.7387548210529236
+  },
+  "features": {
+    "input_features": [
+      "T2M_transformed",
+      "T2M_MAX_transformed",
+      "T2M_MIN_transformed",
+      "PRECTOTCORR_transformed",
+      "RH2M_transformed",
+      "ALLSKY_SFC_SW_DWN_transformed",
+      "month_sin",
+      "month_cos",
+      "year_norm",
+      "latitude",
+      "longitude",
+      "T2M_range",
+      "heat_index",
+      "precip_log",
+      "season_Fall",
+      "season_Spring",
+      "season_Summer",
+      "season_Winter"
+    ],
+    "target_variables": [
+      "T2M_anom",
+      "PRECTOTCORR_anom"
+    ],
+    "continuous_features": [
+      "T2M",
+      "T2M_MAX",
+      "T2M_MIN",
+      "PRECTOTCORR",
+      "RH2M",
+      "ALLSKY_SFC_SW_DWN"
+    ],
+    "temporal_features": [
+      "month_sin",
+      "month_cos",
+      "year_norm"
+    ],
+    "spatial_features": [
+      "latitude",
+      "longitude"
+    ],
+    "engineered_features": [
+      "T2M_range",
+      "heat_index",
+      "precip_log"
+    ],
+    "categorical_features": [
+      "season_Fall",
+      "season_Spring",
+      "season_Summer",
+      "season_Winter"
+    ]
+  },
+  "preprocessing": {
+    "scaler": "StandardScaler",
+    "scaler_file": "lstm_scaler.pkl",
+    "cleaning_scalers_file": "cleaning_scalers.pkl",
+    "cleaning_encoders_file": "cleaning_encoders.pkl"
+  },
+  "api_requirements": {
+    "nasa_power_api": "https://power.larc.nasa.gov/api/temporal/monthly/point",
+    "required_parameters": [
+      "T2M",
+      "T2M_MAX",
+      "T2M_MIN",
+      "PRECTOTCORR",
+      "RH2M",
+      "ALLSKY_SFC_SW_DWN"
+    ],
+    "temporal_range": "Last 24 months minimum",
+    "data_format": "Monthly time series"
+  },
+  "prediction_outputs": {
+    "T2M_anom": "Temperature anomaly (\u00b0C)",
+    "PRECTOTCORR_anom": "Precipitation anomaly (mm)"
+  },
+  "files": {
+    "model": "climate_lstm_model.keras",
+    "feature_scaler": "lstm_scaler.pkl",
+    "cleaning_scalers": "cleaning_scalers.pkl",
+    "cleaning_encoders": "cleaning_encoders.pkl",
+    "configuration": "model_configuration.json",
+    "metadata": "deployment_metadata.json"
+  }
+}

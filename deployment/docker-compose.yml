@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  nasa-climate-api:
+    build: .
+    container_name: nasa-climate-api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MODEL_BUNDLE_DIR=/app/model_bundle
+    volumes:
+      - ./model_bundle:/app/model_bundle:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

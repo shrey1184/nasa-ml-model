@@ -1,0 +1,76 @@
+{
+  "target_variables": [
+    "T2M_anom",
+    "PRECTOTCORR_anom"
+  ],
+  "continuous_features": [
+    "T2M",
+    "T2M_MAX",
+    "T2M_MIN",
+    "PRECTOTCORR",
+    "RH2M",
+    "ALLSKY_SFC_SW_DWN"
+  ],
+  "temporal_features": [
+    "month_sin",
+    "month_cos",
+    "year_norm"
+  ],
+  "spatial_features": [
+    "latitude",
+    "longitude"
+  ],
+  "engineered_features": [
+    "T2M_range",
+    "heat_index",
+    "precip_log"
+  ],
+  "categorical_features": [
+    "season_Fall",
+    "season_Spring",
+    "season_Summer",
+    "season_Winter"
+  ],
+  "all_features_original": [
+    "T2M",
+    "T2M_MAX",
+    "T2M_MIN",
+    "PRECTOTCORR",
+    "RH2M",
+    "ALLSKY_SFC_SW_DWN",
+    "month_sin",
+    "month_cos",
+    "year_norm",
+    "latitude",
+    "longitude",
+    "T2M_range",
+    "heat_index",
+    "precip_log",
+    "season_Fall",
+    "season_Spring",
+    "season_Summer",
+    "season_Winter"
+  ],
+  "all_features_transformed": [
+    "T2M_transformed",
+    "T2M_MAX_transformed",
+    "T2M_MIN_transformed",
+    "PRECTOTCORR_transformed",
+    "RH2M_transformed",
+    "ALLSKY_SFC_SW_DWN_transformed",
+    "month_sin",
+    "month_cos",
+    "year_norm",
+    "latitude",
+    "longitude",
+    "T2M_range",
+    "heat_index",
+    "precip_log",
+    "season_Fall",
+    "season_Spring",
+    "season_Summer",
+    "season_Winter"
+  ],
+  "total_features": 18,
+  "samples": 1800
+}
